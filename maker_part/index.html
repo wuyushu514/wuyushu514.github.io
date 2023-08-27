@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="wuyushu514" /><link rel="canonical" href="https://wuyushu514.github.io/maker_part/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Maker part - Yushu Docs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Maker part";
+        var mkdocs_page_input_path = "maker_part.md";
+        var mkdocs_page_url = "/maker_part/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Yushu Docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../hello/">Hello</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../windchill_ec/">Windchill - EC</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../windchill_doc/">Windchill - DOC</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Yushu Docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li>Maker part</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <hr />
+<p>title: "2-1.Maker Part"
+description: "Maker Part"
+lead: "Maker Code、Maker PN、Document"
+date: 2020-11-12T13:26:54+01:00
+lastmod: 2020-11-12T13:26:54+01:00
+draft: false
+images: []
+menu:
+docs:
+parent: "help"
+weight: 610
+toc: true</p>
+<hr />
+<blockquote>
+<h6 id="maker-pn-maker-code">依據 Maker PN 與 Maker Code 取得 製造商零件</h6>
+<p><img alt="RUNOOB 图标" src="/images/maker_part.png" /></p>
+</blockquote>
+<pre><code>public static void test() throws Exception {
+    String makerPN = "NXH25.000AC12F-KAB4-P2";
+    String makerCode = "M0088";
+    ManufacturerPart mPart = getManufacturerPart(makerPN,makerCode);
+
+}
+
+public static ManufacturerPart getManufacturerPart(String makerPN,String makerCode) throws Exception {
+    ManufacturerPart part = null;
+    QuerySpec qs = new QuerySpec(ManufacturerPart.class);
+    qs.appendWhere(new SearchCondition(ManufacturerPart.class,
+        ManufacturerPart.NUMBER, SearchCondition.EQUAL,
+        makerPN), new int[]{0});
+    qs.appendAnd();
+    qs.appendWhere(new SearchCondition(ManufacturerPart.class,
+        ManufacturerPart.LATEST_ITERATION, SearchCondition.IS_TRUE), new int[]{0});
+    QueryResult qr = PersistenceHelper.manager.find(qs);
+    if(qr!=null){
+    while (qr.hasMoreElements()){
+      ManufacturerPart tempPart = (ManufacturerPart)qr.nextElement();
+        if(tempPart.getOrganizationName().toLowerCase().indexOf(makerCode.toLowerCase())!=-1){
+          part = tempPart;
+          break;
+        }
+      }
+    }
+    return part;
+}
+</code></pre>
+<blockquote>
+<h6 id="_1">依據製造商零件，取得文件</h6>
+<p><img alt="RUNOOB 图标" src="/images/maker_part_doc.png" /></p>
+</blockquote>
+<pre><code>public static void test() throws Exception {
+    String makerPN = "NXH25.000AC12F-KAB4-P2";
+    String makerCode = "M0088";
+    ManufacturerPart mPart = getManufacturerPart(makerPN,makerCode);
+    List&lt;WTDocumentMaster&gt; list = getWTDocumentMasterList(mPart);
+    for(WTDocumentMaster mdoc:list) {
+      List&lt;WTDocument&gt; docList = getWTDocument(mdoc.getNumber());
+      for(WTDocument doc:docList) {
+        String docNumber = doc.getNumber();
+        String ver = doc.getVersionInfo().getIdentifier().getValue();
+        String iter = doc.getIterationInfo().getIdentifier().getValue();
+        String makerCode = (String)ext.mitac.report.util.IBAValueHelper.getIBAValue(doc, "MakerCode");
+        System.out.println("文件編號：" + docNumber);
+        System.out.println("文件版本：" + ver + "." + iter);
+        System.out.println("文件Maker Code 屬性：" + makerCode);
+      }
+    }
+}
+
+public static List&lt;WTDocumentMaster&gt; getWTDocumentMasterList(ManufacturerPart mPart) throws Exception {
+  ArrayList&lt;WTDocumentMaster&gt; list = new ArrayList&lt;WTDocumentMaster&gt;();
+  QueryResult qr = WTPartHelper.service.getReferencesWTDocumentMasters(mPart);
+    while (qr.hasMoreElements())
+    {
+        Object tempObj = qr.nextElement();
+        if (tempObj instanceof WTDocumentMaster)
+        {
+            WTDocumentMaster wtDocumentMaster = (WTDocumentMaster) tempObj;
+            list.add(wtDocumentMaster);
+        }
+    }
+    return list;
+}
+
+public static List&lt;WTDocument&gt; getWTDocument(String number) throws WTException {
+    List&lt;WTDocument&gt; docs = new ArrayList&lt;WTDocument&gt;();
+    QuerySpec lqs = new QuerySpec(WTDocument.class);
+    lqs.appendSearchCondition(new SearchCondition(WTDocument.class, WTDocument.NUMBER, SearchCondition.LIKE, number, false));
+    QueryResult results = PersistenceHelper.manager.find(lqs);
+    while (results.hasMoreElements()) {
+      WTDocument doc = (WTDocument) results.nextElement();
+      docs.add(doc);
+    }
+    return docs;
+}
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
