@@ -8,7 +8,7 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 * `mkdocs serve` - Start the live-reloading docs server.
 * `mkdocs build` - Build the documentation site.
 * `mkdocs -h` - Print help message and exit.
-* `mkdocs gh-deploy --force --remote-branch main` - 部署至 GITHUB PAGE
+* `mkdocs gh-deploy --force` - 部署至 GITHUB PAGE
 
 ## Project layout
 
