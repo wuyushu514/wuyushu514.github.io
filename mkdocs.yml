@@ -1,0 +1,12 @@
+site_name: Yushu Docs
+site_url: https://wuyushu514.github.io/
+site_author: wuyushu514
+site_description: a short description of your website
+
+nav:
+  - Hello: hello.md
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - yaml
