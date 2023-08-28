@@ -4,7 +4,6 @@ site_author: wuyushu514
 site_description: a short description of your website
 
 nav:
-  - Hello: hello.md
   - Windchill - EC: windchill_ec.md
   - Windchill - DOC: windchill_doc.md
 theme:
