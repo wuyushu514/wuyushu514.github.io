@@ -7,7 +7,9 @@ nav:
   - Windchill - EC: windchill_ec.md
   - Windchill - DOC: windchill_doc.md
 theme:
-  name: readthedocs
+  features:
+    - content.code.copy
+  name: material
   highlightjs: true
   hljs_languages:
     - yaml
