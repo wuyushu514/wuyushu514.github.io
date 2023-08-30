@@ -165,3 +165,51 @@ work = checkoutLink.getWorkingCopy();
 work = WorkInProgressHelper.service.checkin(work, "check in msg"); 
 
 ```
+
+##### 1.WTDocument 取得出庫人員並恢復出庫
+
+
+```
+    String docNum = "0001154314";
+		WTDocument doc = DocumentUtil.getLastestWTDocument(docNum);
+
+    if (WorkInProgressHelper.isCheckedOut(doc)) {
+			if("Administrator".equals(doc.getLockerName())) {
+				WorkInProgressHelper.service.undoCheckout(doc);
+			}
+		}
+
+```
+
+
+```
+	public static WTDocument getLastestWTDocument(String number) throws Exception {
+		WTDocumentMaster master = new WTDocumentMaster();
+		QuerySpec lqs = new QuerySpec(WTDocumentMaster.class);
+		lqs.appendSearchCondition(new SearchCondition(WTDocumentMaster.class, WTDocumentMaster.NUMBER,
+				SearchCondition.EQUAL, number, false));
+		QueryResult results = PersistenceHelper.manager.find(lqs);
+		while (results.hasMoreElements()) {
+			master = (WTDocumentMaster) results.nextElement();
+		}
+
+		QueryResult queryResult = wt.vc.VersionControlHelper.service.allVersionsOf(master);
+		WTDocument rc = null;
+		while (queryResult.hasMoreElements()) {
+			WTDocument obj = ((WTDocument) queryResult.nextElement());
+			if (!wt.vc.wip.WorkInProgressHelper.isWorkingCopy(obj)) {
+				if (rc == null
+						|| obj.getVersionIdentifier().getSeries().greaterThan(rc.getVersionIdentifier().getSeries())) {
+					rc = obj;
+				}
+			}
+		}
+
+		if (rc != null) {
+			return (WTDocument) wt.vc.VersionControlHelper.getLatestIteration(rc);
+		} else {
+			return rc;
+		}
+	}
+
+```
