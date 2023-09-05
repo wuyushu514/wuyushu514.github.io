@@ -6,6 +6,7 @@ site_description: a short description of your website
 nav:
   - Windchill - EC: windchill_ec.md
   - Windchill - DOC: windchill_doc.md
+  - Windchill - Workfolw: windchill_workflow.md
 theme:
   features:
     - content.code.copy
