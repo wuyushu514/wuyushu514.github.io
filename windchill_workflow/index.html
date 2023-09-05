@@ -326,6 +326,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    查詢自動簽核的投票狀況 (SQL)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql_1" class="md-nav__link">
+    修改簽核人員的註解 (SQL)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#b1" class="md-nav__link">
     B1
   </a>
@@ -451,6 +465,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sql" class="md-nav__link">
+    查詢自動簽核的投票狀況 (SQL)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql_1" class="md-nav__link">
+    修改簽核人員的註解 (SQL)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#b1" class="md-nav__link">
     B1
   </a>
@@ -557,6 +585,35 @@ QE-MB為流程狀況中的角色</p>
     }
     return votors;
 }
+</code></pre>
+<h6 id="sql">查詢自動簽核的投票狀況 (SQL)</h6>
+<p>-- 查詢自動簽核的投票狀況</p>
+<pre><code>select Wv.*,sign.*
+from
+  PLM_AUTO_SIGN sign,
+  Wfprocess Wp,Wfassignedactivity Wfc,
+  Wfassignment Waa
+  left join Workitem Wi on Wi.Ida3c4 =  Waa.Ida2a2
+  right join (Select Activitykey, Activityname, Ida3a6, Role, Eventlist, Usercomment,Ida2a2 As Wv_Ida2a2 ,Ida3b6  From Wfvotingeventaudit) Wv on Wv.Ida3b6 = Wi.Ida2a2
+where Wp.Ida2a2 = Wfc.Ida3parentprocessref and Waa.Ida3a4 = Wfc.Ida2a2
+and Wp.ida2a2 = replace(sign.WF_PROCESS_OID,'OR:wt.workflow.engine.WfProcess:','')
+and Wfc.Name = sign.WF_ACTIVITYNAME order by sign.trx_id desc;
+</code></pre>
+<p>-- 查詢自動簽核的投票狀況 (以前稱作 auto by pass，但因為稽核問題，統一改成 by pass)</p>
+<pre><code>select ida2a2,Activitykey,Role,Eventlist,USERCOMMENT
+from Wfvotingeventaudit
+where USERCOMMENT='by pass';
+</code></pre>
+<h6 id="sql_1">修改簽核人員的註解 (SQL)</h6>
+<p>-- 修改簽核人員的註解</p>
+<pre><code>update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 = '8437249888' and USERCOMMENT='auto by pass';
+select * from Wfvotingeventaudit where ida2a2 = '8437249888';
+
+update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
+  select ida2a2 from Wfvotingeventaudit where USERCOMMENT='auto by pass'
+);
+
+select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
 </code></pre>
 <h6 id="b1">B1</h6>
 <h6 id="b2">B2</h6>
