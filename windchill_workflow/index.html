@@ -292,8 +292,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#wf" class="md-nav__link">
-    於WF新增角色
+  <a href="#11-wf" class="md-nav__link">
+    1.1 於WF新增角色
   </a>
   
 </li>
@@ -312,29 +312,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    取得路由/處理紀錄內指定角色的成員
+  <a href="#21" class="md-nav__link">
+    2.1 取得路由/處理紀錄內指定角色的成員
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    取得路由/處理紀錄內指定角色實際簽核人員
+  <a href="#22" class="md-nav__link">
+    2.2 取得路由/處理紀錄內指定角色實際簽核人員
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sql" class="md-nav__link">
-    查詢自動簽核的投票狀況 (SQL)
+  <a href="#23-sql" class="md-nav__link">
+    2.3 查詢自動簽核的投票狀況 (SQL)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sql_1" class="md-nav__link">
-    修改簽核人員的註解 (SQL)
+  <a href="#24-sql" class="md-nav__link">
+    2.4 修改簽核人員的註解 (SQL)
   </a>
   
 </li>
@@ -345,15 +345,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#b1" class="md-nav__link">
-    B1
+  <a href="#3" class="md-nav__link">
+    3
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#b2" class="md-nav__link">
-    B2
+  <a href="#4" class="md-nav__link">
+    4
   </a>
   
 </li>
@@ -431,8 +431,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#wf" class="md-nav__link">
-    於WF新增角色
+  <a href="#11-wf" class="md-nav__link">
+    1.1 於WF新增角色
   </a>
   
 </li>
@@ -451,29 +451,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    取得路由/處理紀錄內指定角色的成員
+  <a href="#21" class="md-nav__link">
+    2.1 取得路由/處理紀錄內指定角色的成員
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    取得路由/處理紀錄內指定角色實際簽核人員
+  <a href="#22" class="md-nav__link">
+    2.2 取得路由/處理紀錄內指定角色實際簽核人員
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sql" class="md-nav__link">
-    查詢自動簽核的投票狀況 (SQL)
+  <a href="#23-sql" class="md-nav__link">
+    2.3 查詢自動簽核的投票狀況 (SQL)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#sql_1" class="md-nav__link">
-    修改簽核人員的註解 (SQL)
+  <a href="#24-sql" class="md-nav__link">
+    2.4 修改簽核人員的註解 (SQL)
   </a>
   
 </li>
@@ -484,15 +484,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#b1" class="md-nav__link">
-    B1
+  <a href="#3" class="md-nav__link">
+    3
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#b2" class="md-nav__link">
-    B2
+  <a href="#4" class="md-nav__link">
+    4
   </a>
   
 </li>
@@ -521,7 +521,7 @@
 
 <h2 id="workflow">Workflow</h2>
 <h3 id="1">1.角色</h3>
-<h4 id="wf">於WF新增角色</h4>
+<h4 id="11-wf">1.1 於WF新增角色</h4>
 <p>若須於WF內角色清單內新增自定義角色，需於下面設定檔設定
 Windchill/wtCustom/wt/project/RoleRB.rbInfo
 Windchill/wtCustom/wt/project/RoleRB_zh_TW.rbInfo</p>
@@ -531,7 +531,7 @@ MI_ENGINEER.shortDescription=MI Engineer
 MI_ENGINEER.order=9424
 </code></pre>
 <h3 id="2">2.投票</h3>
-<h4 id="_1">取得路由/處理紀錄內指定角色的成員</h4>
+<h4 id="21">2.1 取得路由/處理紀錄內指定角色的成員</h4>
 <p>getRolePrincipal(eco,"QE(PCBA) ENGINEER")
 QE(PCBA) ENGINEER為流程狀況中的名稱</p>
 <pre><code>public static ArrayList&lt;WTPrincipal&gt; getRolePrincipal(WTChangeOrder2 eco,String roleName) throws WTException {
@@ -554,7 +554,7 @@ QE(PCBA) ENGINEER為流程狀況中的名稱</p>
     return list;
 }
 </code></pre>
-<h4 id="_2">取得路由/處理紀錄內指定角色實際簽核人員</h4>
+<h4 id="22">2.2 取得路由/處理紀錄內指定角色實際簽核人員</h4>
 <p>getVotePerson(eco,"QE-MB")
 QE-MB為流程狀況中的角色</p>
 <pre><code>public static Set&lt;String&gt; getVotePerson(WTChangeOrder2 eco,String roleName) throws WTException {
@@ -586,7 +586,7 @@ QE-MB為流程狀況中的角色</p>
     return votors;
 }
 </code></pre>
-<h4 id="sql">查詢自動簽核的投票狀況 (SQL)</h4>
+<h4 id="23-sql">2.3 查詢自動簽核的投票狀況 (SQL)</h4>
 <p>-- 查詢自動簽核的投票狀況</p>
 <pre><code>select Wv.*,sign.*
 from
@@ -604,7 +604,7 @@ and Wfc.Name = sign.WF_ACTIVITYNAME order by sign.trx_id desc;
 from Wfvotingeventaudit
 where USERCOMMENT='by pass';
 </code></pre>
-<h4 id="sql_1">修改簽核人員的註解 (SQL)</h4>
+<h4 id="24-sql">2.4 修改簽核人員的註解 (SQL)</h4>
 <p>-- 修改簽核人員的註解</p>
 <pre><code>update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 = '8437249888' and USERCOMMENT='auto by pass';
 select * from Wfvotingeventaudit where ida2a2 = '8437249888';
@@ -615,8 +615,8 @@ update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
 
 select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
 </code></pre>
-<h3 id="b1">B1</h3>
-<h3 id="b2">B2</h3>
+<h3 id="3">3</h3>
+<h3 id="4">4</h3>
 
 
 
