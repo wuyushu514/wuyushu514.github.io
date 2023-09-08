@@ -1,26 +1,126 @@
 
-#### Workflow
+## Workflow
 
-##### 1.角色
+### 1. 角色
 
-###### 於WF新增角色
+#### 1-1. 於WF新增角色
 
 若須於WF內角色清單內新增自定義角色，需於下面設定檔設定
 Windchill/wtCustom/wt/project/RoleRB.rbInfo
 Windchill/wtCustom/wt/project/RoleRB_zh_TW.rbInfo
 
-設定值如下，其中order號碼每次跳號64
+設定值如下，其中order號碼每次跳號64，其中MI_ENGINEER為KEY
+
+```
 MI_ENGINEER.value=MI Engineer
 MI_ENGINEER.shortDescription=MI Engineer
 MI_ENGINEER.order=9424
+```
 
-###### T2
+### 2. 投票
 
-###### T3
+#### 2-1. 取得路由/處理紀錄內指定角色的成員
 
+getRolePrincipal(eco,"QE(PCBA) ENGINEER")
+QE(PCBA) ENGINEER為流程狀況中的名稱
 
-##### 2.B
+```
+public static ArrayList<WTPrincipal> getRolePrincipal(WTChangeOrder2 eco,String roleName) throws WTException {
+    ArrayList<WTPrincipal> list = new ArrayList<WTPrincipal>();
+    wt.team.Team team = (wt.team.Team) eco.getTeamId().getObject();
+    Vector<Role> roles = team.getRoles();
+    java.util.Enumeration principals;
+    try {
+      principals = team.getPrincipalTarget(wt.project.Role.toRole(roleName));
+      while(principals.hasMoreElements())
+      {
+        wt.org.WTPrincipalReference principalRef = (wt.org.WTPrincipalReference)principals.nextElement();
+        wt.org.WTPrincipal wtprincipal = principalRef.getPrincipal();
+        list.add(wtprincipal);
+      }
+    } catch (WTInvalidParameterException | WTException e) {
+      e.printStackTrace();
+    } // replace the role KEY appropriately
 
-###### B1
+    return list;
+}
+```
 
-###### B2
+#### 2-2. 取得路由/處理紀錄內指定角色實際簽核人員
+
+getVotePerson(eco,"QE-MB")
+QE-MB為流程狀況中的角色
+
+```
+public static Set<String> getVotePerson(WTChangeOrder2 eco,String roleName) throws WTException {
+    Set<String> votors = new HashSet<String>();
+    WTContainer wtContainer = eco.getContainer();
+    QueryResult wfs = WfEngineHelper.service.getAssociatedProcesses(eco, null, WTContainerRef.newWTContainerRef(wtContainer));
+        if (wfs.size() > 0){
+        while(wfs.hasMoreElements()){
+            WfProcess wfprocess = (WfProcess)wfs.nextElement();
+            QueryResult qrWfVotingEventAudits = NmWorkflowHelper.service.getVotingEventsForProcess(wfprocess);
+            while (qrWfVotingEventAudits != null && qrWfVotingEventAudits.hasMoreElements()) {
+                WfVotingEventAudit wfvotingeventaudit = (WfVotingEventAudit) qrWfVotingEventAudits.nextElement();
+                WTPrincipalReference wtprincipalreference = wfvotingeventaudit.getAssigneeRef();
+                WTPrincipal wtprincipal = null;
+                if (wtprincipalreference != null) {
+                    wtprincipal = (WTPrincipal) wtprincipalreference.getObject();
+                }
+                String displayRole = "";
+                if(wfvotingeventaudit.getRole()!=null){
+                    displayRole = wfvotingeventaudit.getRole().getDisplay(Locale.ENGLISH);
+                }
+                System.out.println("displayRole:" + displayRole);
+                if(roleName.equalsIgnoreCase(displayRole)) {
+                    votors.add(wtprincipal.getName());
+                }
+            }
+        }
+    }
+    return votors;
+}
+```
+
+#### 2-3. 查詢自動簽核的投票狀況 (SQL)
+
+-- 查詢自動簽核的投票狀況
+
+```
+select Wv.*,sign.*
+from
+  PLM_AUTO_SIGN sign,
+  Wfprocess Wp,Wfassignedactivity Wfc,
+  Wfassignment Waa
+  left join Workitem Wi on Wi.Ida3c4 =  Waa.Ida2a2
+  right join (Select Activitykey, Activityname, Ida3a6, Role, Eventlist, Usercomment,Ida2a2 As Wv_Ida2a2 ,Ida3b6  From Wfvotingeventaudit) Wv on Wv.Ida3b6 = Wi.Ida2a2
+where Wp.Ida2a2 = Wfc.Ida3parentprocessref and Waa.Ida3a4 = Wfc.Ida2a2
+and Wp.ida2a2 = replace(sign.WF_PROCESS_OID,'OR:wt.workflow.engine.WfProcess:','')
+and Wfc.Name = sign.WF_ACTIVITYNAME order by sign.trx_id desc;
+```
+
+-- 查詢自動簽核的投票狀況 (以前稱作 auto by pass，但因為稽核問題，統一改成 by pass)
+```
+select ida2a2,Activitykey,Role,Eventlist,USERCOMMENT
+from Wfvotingeventaudit
+where USERCOMMENT='by pass';
+```
+
+#### 2-4. 修改簽核人員的註解 (SQL) 
+
+-- 修改簽核人員的註解
+
+```
+update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 = '8437249888' and USERCOMMENT='auto by pass';
+select * from Wfvotingeventaudit where ida2a2 = '8437249888';
+
+update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
+  select ida2a2 from Wfvotingeventaudit where USERCOMMENT='auto by pass'
+);
+
+select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
+```
+
+### 3
+
+### 4

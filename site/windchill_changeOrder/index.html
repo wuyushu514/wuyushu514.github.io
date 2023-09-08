@@ -12,9 +12,11 @@
         <meta name="author" content="wuyushu514">
       
       
-        <link rel="canonical" href="https://wuyushu514.github.io/windchill_ec/">
+        <link rel="canonical" href="https://wuyushu514.github.io/windchill_changeOrder/">
       
       
+      
+        <link rel="next" href="../windchill_doc/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +24,7 @@
     
     
       
-        <title>Windchill ec - Yushu Docs</title>
+        <title>Windchill - ChangeOrder - Yushu Docs</title>
       
     
     
@@ -67,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ec" class="md-skip">
+        <a href="#changeorder" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Windchill ec
+              Windchill - ChangeOrder
             
           </span>
         </div>
@@ -190,9 +192,27 @@
       
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../windchill_changeOrder/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Windchill - ChangeOrder
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -201,6 +221,118 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#changeorder" class="md-nav__link">
+    ChangeOrder 變更通知
+  </a>
+  
+    <nav class="md-nav" aria-label="ChangeOrder 變更通知">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1. 詳細資訊
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 詳細資訊">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-1-wtchangeorder2" class="md-nav__link">
+    1-1. 取得 WTChangeOrder2 企業屬性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-2-wtchangeorder2" class="md-nav__link">
+    1-2. 取得 WTChangeOrder2 單據狀態
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-3-changelistxls" class="md-nav__link">
+    1-3. 附件檔案 - 以 ChangeList.xls 為例
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 實行計畫
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 實行計畫">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    2-1. 取得 受影響物件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-2" class="md-nav__link">
+    2-2. 取得 產生物件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-part" class="md-nav__link">
+    3. 變更 (到時候移到Part 內)
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 變更 (到時候移到Part 內)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-1" class="md-nav__link">
+    3-1. 取得 源於變更通知
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -287,31 +419,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ec" class="md-nav__link">
-    EC
+  <a href="#changeorder" class="md-nav__link">
+    ChangeOrder 變更通知
   </a>
   
-    <nav class="md-nav" aria-label="EC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    產生物件
-  </a>
-  
-    <nav class="md-nav" aria-label="產生物件">
+    <nav class="md-nav" aria-label="ChangeOrder 變更通知">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#1" class="md-nav__link">
-    1.取得產生物件
+    1. 詳細資訊
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 詳細資訊">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-1-wtchangeorder2" class="md-nav__link">
+    1-1. 取得 WTChangeOrder2 企業屬性
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    2.移除產生物件
+  <a href="#1-2-wtchangeorder2" class="md-nav__link">
+    1-2. 取得 WTChangeOrder2 單據狀態
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-3-changelistxls" class="md-nav__link">
+    1-3. 附件檔案 - 以 ChangeList.xls 為例
   </a>
   
 </li>
@@ -322,23 +461,43 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    受影響物件
+  <a href="#2" class="md-nav__link">
+    2. 實行計畫
   </a>
   
-    <nav class="md-nav" aria-label="受影響物件">
+    <nav class="md-nav" aria-label="2. 實行計畫">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1_1" class="md-nav__link">
-    1.受影響物件
+  <a href="#2-1" class="md-nav__link">
+    2-1. 取得 受影響物件
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2_1" class="md-nav__link">
-    2.受影響物件
+  <a href="#2-2" class="md-nav__link">
+    2-2. 取得 產生物件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-part" class="md-nav__link">
+    3. 變更 (到時候移到Part 內)
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 變更 (到時候移到Part 內)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-1" class="md-nav__link">
+    3-1. 取得 源於變更通知
   </a>
   
 </li>
@@ -368,46 +527,138 @@
                   
 
 
-  <h1>Windchill ec</h1>
+  <h1>Windchill - ChangeOrder</h1>
 
-<h4 id="ec">EC</h4>
-<h5 id="_1">產生物件</h5>
-<h6 id="1">1.取得產生物件</h6>
-<p>測試說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h2 id="changeorder">ChangeOrder 變更通知</h2>
+<h3 id="1">1. 詳細資訊</h3>
+<h4 id="1-1-wtchangeorder2">1-1. 取得 WTChangeOrder2 企業屬性</h4>
+<pre><code>public static void test() throws Exception {
+    String ecno = &quot;C386210005&quot;;
+    WTChangeOrder2 eco = ext.generic.util.ChangeUtil.getChangeNoticeByNumber(ecno, true);
+
+    String buName = (String) ext.mitac.report.util.IBAValueHelper.getIBAValue(eco, &quot;BUname&quot;);
+    String description = eco.getDescription();
+
+    System.out.println(&quot;單據號碼：&quot;+eco.getNumber());
+    System.out.println(&quot;單據名稱：&quot;+eco.getName());
+    System.out.println(&quot;單據屬性(BU)：&quot;+buName);
+    System.out.println(&quot;單據描述：&quot;+description);
+}
+
 </code></pre>
-<h6 id="2">2.移除產生物件</h6>
-<p>測試說明94要說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h4 id="1-2-wtchangeorder2">1-2. 取得 WTChangeOrder2 單據狀態</h4>
+<pre><code>
+String ecno = &quot;C386210005&quot;;
+WTChangeOrder2 eco = ext.generic.util.ChangeUtil.getChangeNoticeByNumber(ecno, true);
+String ecnState = eco.getLifeCycleState().toString();
+
 </code></pre>
-<h5 id="_2">受影響物件</h5>
-<h6 id="1_1">1.受影響物件</h6>
-<p>測試說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h4 id="1-3-changelistxls">1-3. 附件檔案 - 以 ChangeList.xls 為例</h4>
+<pre><code>
+public static void test() throws Exception {
+    String ecno = &quot;C528210057&quot;;
+    WTChangeOrder2 eco = ext.generic.util.ChangeUtil.getChangeNoticeByNumber(ecno, true);
+
+    //ChangeList.xls
+    File changeList = getChangeItem(eco);
+}
+
+public static File getChangeItem(Object businessObject) throws WTException, IOException {
+    System.out.println(&quot;getChangeItem.....&quot;);
+    String fileName = &quot;&quot;;
+    List&lt;Object&gt; changeItemList = null;
+    WTChangeOrder2 co = (WTChangeOrder2) businessObject;
+    InputStream is = null;
+    QueryResult qr = null;
+    qr = ContentHelper.service.getContentsByRole(co, ContentRoleType.SECONDARY);
+    ApplicationData ap = null;
+    while (qr.hasMoreElements()) {
+        Object o = qr.nextElement();
+        if (o instanceof ApplicationData) {
+            ap = (ApplicationData) o;
+            fileName = ap.getFileName();
+            if (fileName.startsWith(&quot;ChangeList_&quot;)
+                    &amp;&amp; fileName.endsWith(&quot;.xls&quot;)) {
+                qr = null;
+                break;
+            }
+            ap = null;
+        }
+    }
+
+    if (ap == null) {
+        return null;
+    }
+
+    is = ContentServerHelper.service.findContentStream(ap);
+    if (is == null) {
+        throw new WTException(&quot;Could not get input stream from content file!&quot;);
+    }
+
+    WTProperties wtproperties = WTProperties.getServerProperties();
+    String filepath = wtproperties.getProperty(&quot;mitac.report.download.path&quot;);
+
+    String path = filepath + fileName; // 抓取檔案存放路徑
+    File file = new File(path);
+    FileUtils.copyInputStreamToFile(is, file);
+    return file;
+}
+
 </code></pre>
-<h6 id="2_1">2.受影響物件</h6>
-<p>測試說明94要說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h3 id="2">2. 實行計畫</h3>
+<h4 id="2-1">2-1. 取得 受影響物件</h4>
+<pre><code>public static void test() throws Exception {
+
+    String ecno = &quot;C386210005&quot;;
+    WTChangeOrder2 eco = ext.generic.util.ChangeUtil.getChangeNoticeByNumber(ecno, true);
+
+    // 受影響物件
+    List&lt;Changeable2&gt; beforChangeableList =  ext.generic.util.ChangeUtil.getChangeNoticeItemsBefore(eco);
+    for(Changeable2 obj :beforChangeableList) {
+      if (obj instanceof ManufacturerPart) {
+        ManufacturerPart mpart = (ManufacturerPart) obj;
+          System.out.println(&quot;mpart:&quot;+mpart.getNumber());
+          String makerCode = ext.mitac.integration.erp.CommandUtil.getMakerCode(mpart);
+          System.out.println(&quot;makerCode1:&quot;+makerCode);
+        }else if(obj instanceof WTPart){
+          WTPart wtPart = (WTPart) obj;
+            System.out.println(&quot;WTPart:&quot;+wtPart.getNumber());
+        }
+    }
+}
+
+</code></pre>
+<h4 id="2-2">2-2. 取得 產生物件</h4>
+<pre><code>
+public static void test() throws Exception {
+    String ecno = &quot;C386210005&quot;;
+    WTChangeOrder2 eco = ext.generic.util.ChangeUtil.getChangeNoticeByNumber(ecno, true);
+    // 產生物件、結果物件
+    List&lt;Changeable2&gt; afterChangeableList =  ext.generic.util.ChangeUtil.getChangeablesAfter(eco);
+    for(Changeable2 obj :afterChangeableList) {
+        if (obj instanceof ManufacturerPart) {
+            ManufacturerPart mpart = (ManufacturerPart) obj;
+            System.out.println(&quot;mpart:&quot;+mpart.getNumber());
+            String makerCode = ext.mitac.integration.erp.CommandUtil.getMakerCode(mpart);
+            System.out.println(&quot;makerCode1:&quot;+makerCode);
+        }else if(obj instanceof WTPart){
+            WTPart wtPart = (WTPart) obj;
+            System.out.println(&quot;WTPart:&quot;+wtPart.getNumber());
+        }
+    }
+}
+
+</code></pre>
+<h3 id="3-part">3. 變更 (到時候移到Part 內)</h3>
+<h4 id="3-1">3-1. 取得 源於變更通知</h4>
+<pre><code>
+wt.fc.QueryResult affectCNs = wt.change2.ChangeHelper2.service
+        .getLatestUniqueImplementedChangeOrders((wt.change2.Changeable2) part);
+
+while (affectCNs.hasMoreElements()) {
+    wt.change2.WTChangeOrder2 ecn = (wt.change2.WTChangeOrder2) affectCNs.nextElement();            
+}
+
 </code></pre>
 
 

@@ -4,9 +4,10 @@ site_author: wuyushu514
 site_description: a short description of your website
 
 nav:
-  - Windchill - EC: windchill_ec.md
+  - Windchill - ChangeOrder: windchill_changeOrder.md
   - Windchill - DOC: windchill_doc.md
   - Windchill - Workfolw: windchill_workflow.md
+  - Java - temp: java_temp.md
 theme:
   features:
     - content.code.copy
