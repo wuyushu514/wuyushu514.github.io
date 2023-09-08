@@ -657,6 +657,9 @@ public static void test() throws Exception {
 wt.fc.QueryResult affectCNs = wt.change2.ChangeHelper2.service
         .getLatestUniqueImplementedChangeOrders((wt.change2.Changeable2) part);
 
+while (affectCNs.hasMoreElements()) {
+    wt.change2.WTChangeOrder2 ecn = (wt.change2.WTChangeOrder2) affectCNs.nextElement();            
+}
 
 </code></pre>
 
