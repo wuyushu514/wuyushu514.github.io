@@ -5,6 +5,7 @@ site_description: a short description of your website
 
 nav:
   - Windchill - WTObject: windchill_wtObject.md
+  - Windchill - WTPart: windchill_wtPart.md
   - Windchill - ChangeOrder: windchill_changeOrder.md
   - Windchill - DOC: windchill_doc.md
   - Windchill - Workfolw: windchill_workflow.md
