@@ -12,9 +12,11 @@
         <meta name="author" content="wuyushu514">
       
       
-        <link rel="canonical" href="https://wuyushu514.github.io/windchill_ec/">
+        <link rel="canonical" href="https://wuyushu514.github.io/windchill_wtObject/">
       
       
+      
+        <link rel="next" href="../windchill_changeOrder/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +24,7 @@
     
     
       
-        <title>Windchill ec - Yushu Docs</title>
+        <title>Windchill - WTObject - Yushu Docs</title>
       
     
     
@@ -67,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ec" class="md-skip">
+        <a href="#wtobject" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Windchill ec
+              Windchill - WTObject
             
           </span>
         </div>
@@ -190,9 +192,27 @@
       
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../windchill_wtObject/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Windchill - WTObject
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -201,6 +221,85 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#wtobject" class="md-nav__link">
+    WTObject
+  </a>
+  
+    <nav class="md-nav" aria-label="WTObject">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-iba" class="md-nav__link">
+    1. IBA
+  </a>
+  
+    <nav class="md-nav" aria-label="1. IBA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-1-iba" class="md-nav__link">
+    1-1. 取得IBA屬性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-2-iba" class="md-nav__link">
+    1-2. 更新IBA屬性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-3-iba-for" class="md-nav__link">
+    1-3. 取得/設置IBA屬性 for 多重值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-4-ibakey-sql" class="md-nav__link">
+    1-4. 查詢/修改ibaKey值 SQL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2checkinout" class="md-nav__link">
+    2.CheckInOut
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -306,31 +405,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ec" class="md-nav__link">
-    EC
+  <a href="#wtobject" class="md-nav__link">
+    WTObject
   </a>
   
-    <nav class="md-nav" aria-label="EC">
+    <nav class="md-nav" aria-label="WTObject">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    產生物件
+  <a href="#1-iba" class="md-nav__link">
+    1. IBA
   </a>
   
-    <nav class="md-nav" aria-label="產生物件">
+    <nav class="md-nav" aria-label="1. IBA">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    1.取得產生物件
+  <a href="#1-1-iba" class="md-nav__link">
+    1-1. 取得IBA屬性
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    2.移除產生物件
+  <a href="#1-2-iba" class="md-nav__link">
+    1-2. 更新IBA屬性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-3-iba-for" class="md-nav__link">
+    1-3. 取得/設置IBA屬性 for 多重值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-4-ibakey-sql" class="md-nav__link">
+    1-4. 查詢/修改ibaKey值 SQL
   </a>
   
 </li>
@@ -341,29 +454,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    受影響物件
+  <a href="#2checkinout" class="md-nav__link">
+    2.CheckInOut
   </a>
-  
-    <nav class="md-nav" aria-label="受影響物件">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1_1" class="md-nav__link">
-    1.受影響物件
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2_1" class="md-nav__link">
-    2.受影響物件
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -387,46 +480,146 @@
                   
 
 
-  <h1>Windchill ec</h1>
+  <h1>Windchill - WTObject</h1>
 
-<h4 id="ec">EC</h4>
-<h5 id="_1">產生物件</h5>
-<h6 id="1">1.取得產生物件</h6>
-<p>測試說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h2 id="wtobject">WTObject</h2>
+<h3 id="1-iba">1. IBA</h3>
+<h4 id="1-1-iba">1-1. 取得IBA屬性</h4>
+<p>取得IBA屬性</p>
+<pre><code>ext.generic.util.IBAUtility iba = new ext.generic.util.IBAUtility((wt.doc.WTDocument) primaryBusinessObject);
+String ibaKey = &quot;applicant&quot;;
+String ibaValue = iba.getIBAValue(ibaKey);
+
+String projectCode = new IBAUtility(product).getIBAValue(IbaEnum.PROJECT_CODE.getName());
+
 </code></pre>
-<h6 id="2">2.移除產生物件</h6>
-<p>測試說明94要說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h4 id="1-2-iba">1-2. 更新IBA屬性</h4>
+<pre><code>
+public static void updateIba(WTPart part, String key, String value) throws WTException, WTPropertyVetoException, RemoteException{
+        WTPart checkOutPart = (WTPart)IBAUtility.checkOut(part);
+        IBAUtility iba = new IBAUtility(checkOutPart);
+        iba.setIBAValue(key, value);
+        iba.updateAttributeContainer(checkOutPart);
+        PersistenceHelper.manager.save(checkOutPart);
+        PersistenceHelper.manager.refresh(checkOutPart);
+        if(!WorkInProgressHelper.isCheckedOut(part)) {
+              IBAUtility.checkIn(part,&quot;update &quot;+key+&quot; to &quot; + value);
+    }
+}
+
 </code></pre>
-<h5 id="_2">受影響物件</h5>
-<h6 id="1_1">1.受影響物件</h6>
-<p>測試說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h4 id="1-3-iba-for">1-3. 取得/設置IBA屬性 for 多重值</h4>
+<pre><code>
+public static void test() throws Exception {
+    //當IBA屬性為多重值時，也就是該屬性於PLM管理類型內條件約束無單一值的條件限制時為多重值
+    //取得IBA屬性
+    String modelCode = &quot;8055&quot;;
+    MiTACModel model = modelListUtil.getModel(modelCode);
+    String ibaKey = &quot;modelAttr2&quot;;
+    IBAUtility iba = new IBAUtility(model);
+    Vector vec = iba.getIBAValues(ibaKey);
+    System.out.println(&quot;ibaKey:&quot;+ibaKey);
+    for(int i =0; i&lt;vec.size(); i++) 
+        System.out.println(&quot;ibaValues i:&quot;+vec.get(i));
+
+    //設置IBA屬性
+    Vector vecNew = new Vector();
+    vecNew.add(&quot;441N41400133&quot;);
+    vecNew.add(&quot;441N64600005&quot;);
+    model = (MiTACModel) modelListUtil.checkoutObject(model);
+    iba.setIBAValues(ibaKey, vecNew);
+    iba.updateAttributeContainer(model);
+    PersistenceHelper.manager.save(model);
+    PersistenceHelper.manager.refresh(model);
+    WorkInProgressHelper.service.checkin(model,&quot;&quot;);
+}
+
 </code></pre>
-<h6 id="2_1">2.受影響物件</h6>
-<p>測試說明94要說明</p>
-<pre><code>&lt;!-- Tiles2 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.apache.struts&lt;/groupId&gt;
-    &lt;artifactId&gt;struts2-tiles-plugin&lt;/artifactId&gt;
-    &lt;version&gt;2.3.8&lt;/version&gt;
-&lt;/dependency&gt;
+<h4 id="1-4-ibakey-sql">1-4. 查詢/修改ibaKey值 SQL</h4>
+<pre><code>
+--取得指定料號的相關IBA屬性值(middlePf連線)
+--除了 MV_STRINGVALUE_PART 還有 MV_UnitVALUE_PART 和 MV_TIMESTAMPVALUE_PART
+select DISPLAYNAME, VALUE from MV_STRINGVALUE_PART 
+where IDA3A4 = (
+    select wp_ida2a2 from mv_part where WTPARTNUMBER= '284260000006'
+)   
+
+--利用Model Desc查詢實際上的ibaKey值
+select distinct 
+    sd.IDA2A2 -- stringvalue 內的 ida3a6值
+    , sd.DESCRIPTION -- 頁面上的IBA欄位名稱
+    , sd.NAME -- ibaKey
+from stringvalue sv, stringdefinition sd
+where sv.ida3a6 = sd.ida2a2
+    and sd.DESCRIPTION = 'Model Description'
+order by sd.IDA2A2
+
+--取得指定料號最新版本之IBA屬性string類別的ibaKey和IbaValue
+select distinct 
+    sd.IDA2A2 -- stringvalue 內的 ida3a6值
+    , sd.DESCRIPTION -- 頁面上的IBA欄位名稱
+    , sd.NAME -- ibaKey
+    , sv.value2 -- value值
+from stringvalue sv, stringdefinition sd
+where sv.ida3a6 = sd.ida2a2
+    and sv.ida3a4 = (
+        select distinct WP_IDA2A2 from V_LASTESTWTPART vl, wtpart wp, wtpartmaster wpm 
+        where wpm.IDA2A2 = wp.IDA3MASTERREFERENCE
+            and wpm.IDA2A2 = vl.WPM_IDA2A2
+            and wpm.WTPARTNUMBER = '284260000006'
+    )
+order by sd.IDA2A2
+
+--取得指定料號指定IBA屬性值
+select VALUE2 from stringvalue 
+where ida3a4 = (
+    select distinct WP_IDA2A2 from V_LASTESTWTPART vl, wtpart wp, wtpartmaster wpm 
+    where wpm.IDA2A2 = wp.IDA3MASTERREFERENCE
+        and wpm.IDA2A2 = vl.WPM_IDA2A2
+        and wpm.WTPARTNUMBER = '284260000006'
+) and ida3a6 = (
+    select IDA2A2 from stringdefinition where DESCRIPTION = 'SBU Applicant'
+)
+
+--修改指定model指定ibaKey之value值
+update stringvalue 
+set value2 = 'model desc change test', value = UPPER('model desc change test')
+where ida2a2 = (
+  select ida2a2 from stringvalue 
+  where ida3a4 = (
+    select ida2a2 from mitacmodel
+    where modelcode = '8055'
+    and LATESTITERATIONINFO = '1'
+  ) and ida3a6 = (
+    select IDA2A2 from stringdefinition where DESCRIPTION = 'Model Description'
+  )
+)
+
+</code></pre>
+<h3 id="2checkinout">2.CheckInOut</h3>
+<p>不適用於單據類</p>
+<pre><code>public static void checkInOutTest() throws Exception {
+      String partNum =&quot;227C52800015&quot;;
+    WTPart part = GenericUtil.getLatestVersionPart(GenericUtil.getPartMaster(partNum));
+    Workable copy = (Workable) part;
+        GenericUtil.checkInOut(copy, false); //出庫
+        //將副本轉型並作處理
+        WTPart newPart = (WTPart) copy;
+        newPart.setName(&quot;newName&quot;);
+        GenericUtil.checkInOut((Workable) newPart, true); //入庫
+}
+
+public static void undoTest() throws Exception {
+    String partNum =&quot;227C52800015&quot;;
+    WTPart part = GenericUtil.getLatestVersionPart(GenericUtil.getPartMaster(partNum));
+    Workable copy = (Workable) part;
+        GenericUtil.checkInOut(copy, false); //出庫
+        //將副本轉型並作處理
+        WTPart newPart = (WTPart) copy;
+        newPart.setName(&quot;newName&quot;);
+    WorkInProgressHelper.service.undoCheckout((Workable) newPart); //恢復出庫
+}
+
 </code></pre>
 
 
