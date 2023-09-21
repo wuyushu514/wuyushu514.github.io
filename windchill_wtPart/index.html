@@ -265,11 +265,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-wtpart" class="md-nav__link">
-    1. WTPart
+  <a href="#1" class="md-nav__link">
+    1. 屬性
   </a>
   
-    <nav class="md-nav" aria-label="1. WTPart">
+    <nav class="md-nav" aria-label="1. 屬性">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -287,8 +287,42 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#1-3-part" class="md-nav__link">
-    1-3. 上一版PART
+  <a href="#1-3" class="md-nav__link">
+    1-3. 狀態
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 版本
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 版本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    2-1. 版本 版序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-2-part" class="md-nav__link">
+    2-2. 上一版 PART
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-3-part" class="md-nav__link">
+    2-3. 退版 PART
   </a>
   
 </li>
@@ -420,11 +454,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-wtpart" class="md-nav__link">
-    1. WTPart
+  <a href="#1" class="md-nav__link">
+    1. 屬性
   </a>
   
-    <nav class="md-nav" aria-label="1. WTPart">
+    <nav class="md-nav" aria-label="1. 屬性">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -442,8 +476,42 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#1-3-part" class="md-nav__link">
-    1-3. 上一版PART
+  <a href="#1-3" class="md-nav__link">
+    1-3. 狀態
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2. 版本
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 版本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-1" class="md-nav__link">
+    2-1. 版本 版序
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-2-part" class="md-nav__link">
+    2-2. 上一版 PART
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-3-part" class="md-nav__link">
+    2-3. 退版 PART
   </a>
   
 </li>
@@ -476,7 +544,7 @@
   <h1>Windchill - WTPart</h1>
 
 <h2 id="wtpart">WTPart</h2>
-<h3 id="1-wtpart">1. WTPart</h3>
+<h3 id="1">1. 屬性</h3>
 <h4 id="1-1">1-1. 料號與品名</h4>
 <p>取得料號與品名</p>
 <pre><code>String number = &quot;5651C5280009&quot;;
@@ -498,7 +566,26 @@ wtpart.getCreateTimestamp();
 wtpart.getModifyTimestamp();
 
 </code></pre>
-<h4 id="1-3-part">1-3. 上一版PART</h4>
+<h4 id="1-3">1-3. 狀態</h4>
+<p>變更 / 取得 零件狀態</p>
+<pre><code>
+String status = &quot;MBOM_RELEASED&quot;; 
+LifeCycleHelper.service.setLifeCycleState(wtpart, State.toState(status));
+
+String partStatus = wtpart.getLifeCycleState().toString(); //取得神達零件狀態
+System.out.println(&quot;partStatus：&quot; + partStatus);
+
+</code></pre>
+<h3 id="2">2. 版本</h3>
+<h4 id="2-1">2-1. 版本 版序</h4>
+<p>取得版本 版序</p>
+<pre><code>
+String verson = wtpart.getVersionInfo().getIdentifier().getValue(); //取得版本
+String iteration = wtpart.getIterationInfo().getIdentifier().getValue(); //取得版序
+System.out.println(&quot;version：&quot; + verson +&quot;.&quot;+ iteration);
+
+</code></pre>
+<h4 id="2-2-part">2-2. 上一版 PART</h4>
 <p>取得上一版PART, 下面函數的input doc可直接丟 wtpart</p>
 <pre><code>
 public static RevisionControlled getPreviousVersion(RevisionControlled doc) {
@@ -522,6 +609,35 @@ public static RevisionControlled getPreviousVersion(RevisionControlled doc) {
     }
     return temp;
 }
+
+</code></pre>
+<h4 id="2-3-part">2-3. 退版 PART</h4>
+<p>退一個小版序</p>
+<pre><code>
+public static String reversion(String partNum) {
+    String errMsg = &quot;&quot;;
+    WTPart part = null;
+    try {
+        QueryResult qr = ConfigHelper.service.filteredIterationsOf(GenericUtil.getPartMaster(partNum), new LatestConfigSpec());
+        while(qr.hasMoreElements()){
+            part = (WTPart)qr.nextElement();
+            //String version =  VersionControlHelper.getVersionIdentifier((Versioned) part).getValue();
+            //String iteration = VersionControlHelper.getIterationIdentifier((Iterated) part).getValue();
+            //System.out.println(&quot;***********&quot;+version + &quot;.&quot; + iteration);
+            ConflictResolution[] resolutions = { new ConflictResolution(VersionControlConflictType.LATEST_ITERATION_DELETE, VersionControlResolutionType.ALLOW_LATEST_ITERATION_DELETE)};
+            WTSet toDelete = new WTHashSet();
+            toDelete.add(part);
+            VersionControlHelper.service.deleteIterations(toDelete, resolutions);
+        }
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+        errMsg = &quot;reversion error and partNum:&quot;+partNum;
+    }
+
+    return errMsg;
+}
+
 
 </code></pre>
 
