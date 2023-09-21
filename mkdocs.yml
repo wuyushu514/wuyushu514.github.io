@@ -8,6 +8,7 @@ nav:
   - Windchill - WTPart: windchill_wtPart.md
   - Windchill - ChangeOrder: windchill_changeOrder.md
   - Windchill - DOC: windchill_doc.md
+  - Windchill - Project: windchill_project.md
   - Windchill - Workfolw: windchill_workflow.md
   - Java - temp: java_temp.md
 theme:
