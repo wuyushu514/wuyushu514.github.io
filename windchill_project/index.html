@@ -355,6 +355,54 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#3-model" class="md-nav__link">
+    3. Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-team" class="md-nav__link">
+    4. Team
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-1-get-users-by-role" class="md-nav__link">
+    4-1. get Users by role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-2-users-to-role" class="md-nav__link">
+    4-2. 增加 Users to role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-3-users" class="md-nav__link">
+    4-3. 刪除 Users
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-4" class="md-nav__link">
+    4-4. 是否為 專案團隊
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -463,6 +511,54 @@
           <li class="md-nav__item">
   <a href="#2-2-project-code" class="md-nav__link">
     2-2. 取得 Project code
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-model" class="md-nav__link">
+    3. Model
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-team" class="md-nav__link">
+    4. Team
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Team">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-1-get-users-by-role" class="md-nav__link">
+    4-1. get Users by role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-2-users-to-role" class="md-nav__link">
+    4-2. 增加 Users to role
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-3-users" class="md-nav__link">
+    4-3. 刪除 Users
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-4" class="md-nav__link">
+    4-4. 是否為 專案團隊
   </a>
   
 </li>
@@ -585,6 +681,109 @@ public static String getProjectCode(PDMLinkProduct product) {
         e.printStackTrace();
         return StringUtils.EMPTY;
     }
+}
+
+</code></pre>
+<h3 id="3-model">3. Model</h3>
+<h3 id="4-team">4. Team</h3>
+<p>此成員代表產品底下成員，並非路由處理紀錄之成員</p>
+<h4 id="4-1-get-users-by-role">4-1. get Users by role</h4>
+<p>根據role id 或 role 撈取成員</p>
+<pre><code>
+public static List&lt;WTPrincipalReference&gt; getUsersByRole(PDMLinkProduct product, Role role) {
+        ArrayList&lt;WTPrincipalReference&gt; users = new ArrayList&lt;&gt;();
+        try {
+            ContainerTeam containerTeam = ContainerTeamHelper.service.getContainerTeam(product);
+            return containerTeam.getAllPrincipalsForTarget(role);
+        } catch (WTException e) {
+            e.printStackTrace();
+            System.out.println(&quot;getUsersByRole error. product name:&quot;+product.getProductName());
+            return users;
+        }   
+    }
+
+public static List&lt;WTPrincipalReference&gt; getUsersByRole(PDMLinkProduct product, String roleName) {
+    return getUsersByRole(product, _Role.toRole(roleName));
+}
+
+</code></pre>
+<h4 id="4-2-users-to-role">4-2. 增加 Users to role</h4>
+<pre><code>
+public static String addUser(PDMLinkProduct product, String roleName, String acc) {
+    String errMsg = &quot;&quot;;
+    if(null == product)
+        return &quot;product is null&quot;;
+    if(StringUtils.isBlank(roleName) || StringUtils.isBlank(acc))
+        return &quot;roleName or acc is null&quot;;
+    WTUser newUser = PrincipalUtil.getUserByName(acc);
+    Role role = _Role.toRole(roleName);
+    try {
+        ContainerTeamHelper.service.addMember(ContainerTeamHelper.service.getContainerTeam(product), role, newUser);
+        PersistenceHelper.manager.save(product);
+        PersistenceHelper.manager.refresh(product);
+    } catch (WTException e) {
+        e.printStackTrace();
+    }
+
+    return errMsg;
+}
+
+</code></pre>
+<h4 id="4-3-users">4-3. 刪除 Users</h4>
+<pre><code>
+public static String removeUser(PDMLinkProduct product, String roleName, String acc) {
+    String errMsg = &quot;&quot;;
+    if(null == product)
+        return &quot;product is null&quot;;
+    if(StringUtils.isBlank(roleName) || StringUtils.isBlank(acc))
+        return &quot;roleName or acc is null&quot;;
+    if(&quot;wcadmin&quot;.equalsIgnoreCase(acc)) {
+        acc = &quot;Administrator&quot;;
+    }
+    Role role = _Role.toRole(roleName);
+    try {
+        List&lt;WTPrincipalReference&gt; users = getUsersByRole(product, role);
+        for(WTPrincipalReference user : users) {
+            if(acc.equals(user.getIdentity())) {
+                ContainerTeamHelper.service.removeMember(ContainerTeamHelper.service.getContainerTeam(product), 
+                        role, user.getPrincipal());
+                PersistenceHelper.manager.save(product);
+                PersistenceHelper.manager.refresh(product);
+                break;
+            }
+        }
+    } catch (WTException e) {
+        e.printStackTrace();
+    }
+    return errMsg;
+}
+
+</code></pre>
+<h4 id="4-4">4-4. 是否為 專案團隊</h4>
+<p>判斷是否為專案團隊</p>
+<pre><code>
+public static boolean isTeamMember(PDMLinkProduct product, String acc) {
+    if(product==null || StringUtils.isBlank(acc)) {
+        return false;
+    }
+
+    if(&quot;wcadmin&quot;.equalsIgnoreCase(acc)) {
+        acc = &quot;Administrator&quot;;
+    }
+
+    try {
+        ContainerTeam team =ContainerTeamHelper.service.getContainerTeam(product);
+        HashMap&lt;?, ?&gt; hm= team.getAllMembers();
+        for(Object key:hm.keySet()) {
+            WTPrincipalReference user = (WTPrincipalReference) key;
+            if(acc.equals(user.getName()))
+                return true;
+        }
+    } catch (WTException e) {
+        e.printStackTrace();
+    }
+
+    return false;
 }
 
 </code></pre>
