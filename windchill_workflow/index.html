@@ -355,6 +355,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#1-2" class="md-nav__link">
+    1-2. 增加 成員
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-3" class="md-nav__link">
+    1-3. 刪除 成員
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -494,6 +508,20 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#1-2" class="md-nav__link">
+    1-2. 增加 成員
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-3" class="md-nav__link">
+    1-3. 刪除 成員
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -586,6 +614,87 @@ Windchill/wtCustom/wt/project/RoleRB_zh_TW.rbInfo</p>
 <pre><code>MI_ENGINEER.value=MI Engineer
 MI_ENGINEER.shortDescription=MI Engineer
 MI_ENGINEER.order=9424
+</code></pre>
+<h4 id="1-2">1-2. 增加 成員</h4>
+<p>於單據中(路由/處理紀錄)角色內增加成員
+下面的roleName指的是key
+key值可參考\Windchill_11.0\Windchill\wtCustom\wt\project\RoleRB.rbInfo 大小寫敏感</p>
+<pre><code>
+WorkflowUtil.addPrincipalToRole(self, roleName, userAd);
+
+public static void addPrincipalToRole(Object processObj, String roleName, String strUserID) throws WTException {
+    WTPrincipal principal = (WTPrincipal)wt.org.OrganizationServicesHelper.manager.getPrincipal(strUserID);
+    if (processObj == null || roleName == null || roleName.length() == 0 || principal == null)
+        return;
+    else
+        addPrincipalToRole(processObj, roleName, principal);
+}
+
+public static void addPrincipalToRole(Object processObj, String roleName, WTPrincipal principal) throws WTException {
+    if (processObj == null || roleName == null || roleName.length() == 0 || principal == null)
+        return;
+    Team team = null;
+    WfProcess wfprocess = getProcess(processObj);
+    wt.team.TeamReference teamreference = wfprocess.getTeamId();
+    team = (Team) teamreference.getObject();
+    Role role = Role.toRole(roleName);
+
+    //String originalUser = principal.getName();
+    //String replaceUser = CommonUtil.mappingTMSUserName(originalUser); //Get mapping user from TMS_USER_MAPPING table.
+    //principal = OrganizationServicesHelper.manager.getPrincipal(replaceUser); //replace principal
+
+    team.addPrincipal(role, principal);
+    //System.out.println(&quot;ext.generic.uril.WorkflowUtil.addPrincipalToRole: Replace = &quot; + originalUser + &quot; change to &quot; + replaceUser);
+    //System.out.println(&quot;.........&quot; + principal.getName());
+    team = (Team) PersistenceHelper.manager.refresh(team);
+    team = (Team) PersistenceHelper.manager.save(team);
+    System.out.println(&quot;ext.generic.uril.WorkflowUtil.addPrincipalToRole: roleName = &quot; + roleName + &quot;-User=&quot; + principal.getName());
+}
+
+
+</code></pre>
+<h4 id="1-3">1-3. 刪除 成員</h4>
+<p>於單據中(路由/處理紀錄)角色內刪除成員
+下面的roleName指的是key</p>
+<pre><code>
+TeamUtil.removeUser(pbo, Arrays.asList(PROJECT_LEADER, L9_PM, SALES, PMP_ENGINEER));
+
+public static String removeUser(WTObject pbo, List&lt;String&gt; roleNameList) {
+    StringBuilder sb = new StringBuilder();
+    for(int i = 0; i&lt;roleNameList.size(); i++){
+        sb.append(removeUser(pbo, roleNameList.get(i)));
+    }
+
+    String msg = sb.toString();
+    sb.setLength(0);
+    return msg;
+}
+
+
+public static String removeUser(WTObject pbo, String roleName) {
+    String msg = &quot;&quot;;
+    try {
+        Team team = ext.mitac.ecm.WorkflowUtil.getTeam(pbo);
+        Role role = _Role.toRole(roleName);
+        team = ext.mitac.ecm.WorkflowUtil.refreshTeam_FromDB(team);
+        Enumeration rolePrincipals = team.getPrincipalTarget(role);
+        boolean hasPrincipals = false;
+        while (rolePrincipals.hasMoreElements()) {
+            WTPrincipalReference prnplRef = (WTPrincipalReference) rolePrincipals.nextElement();
+            hasPrincipals = true;
+        }
+
+        if (hasPrincipals) {
+            team.deleteRole(role);
+        }
+    } catch (Exception e) {
+        msg = &quot;removeUser error roleName:&quot;+roleName;
+        e.printStackTrace();
+    }
+
+    return msg;
+}
+
 </code></pre>
 <h3 id="2">2. 投票</h3>
 <h4 id="2-1">2-1. 取得路由/處理紀錄內指定角色的成員</h4>
