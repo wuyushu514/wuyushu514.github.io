@@ -125,7 +125,7 @@ public static String getProjectCode(PDMLinkProduct product) {
 
 #### 4-1. get Users by role
 
-根據role id 或 role 撈取成員
+根據role id 或 role 撈取產品底下成員
 
 ```
 
@@ -148,6 +148,9 @@ public static List<WTPrincipalReference> getUsersByRole(PDMLinkProduct product, 
 ```
 
 #### 4-2. 增加 Users to role
+
+
+增加 Users to teams
 
 ```
 

@@ -17,6 +17,97 @@ MI_ENGINEER.shortDescription=MI Engineer
 MI_ENGINEER.order=9424
 ```
 
+
+#### 1-2. 增加 成員
+
+於單據中(路由/處理紀錄)角色內增加成員
+下面的roleName指的是key
+key值可參考\Windchill_11.0\Windchill\wtCustom\wt\project\RoleRB.rbInfo 大小寫敏感
+
+```
+
+WorkflowUtil.addPrincipalToRole(self, roleName, userAd);
+
+public static void addPrincipalToRole(Object processObj, String roleName, String strUserID) throws WTException {
+    WTPrincipal principal = (WTPrincipal)wt.org.OrganizationServicesHelper.manager.getPrincipal(strUserID);
+    if (processObj == null || roleName == null || roleName.length() == 0 || principal == null)
+        return;
+    else
+        addPrincipalToRole(processObj, roleName, principal);
+}
+
+public static void addPrincipalToRole(Object processObj, String roleName, WTPrincipal principal) throws WTException {
+    if (processObj == null || roleName == null || roleName.length() == 0 || principal == null)
+        return;
+    Team team = null;
+    WfProcess wfprocess = getProcess(processObj);
+    wt.team.TeamReference teamreference = wfprocess.getTeamId();
+    team = (Team) teamreference.getObject();
+    Role role = Role.toRole(roleName);
+        
+    //String originalUser = principal.getName();
+    //String replaceUser = CommonUtil.mappingTMSUserName(originalUser); //Get mapping user from TMS_USER_MAPPING table.
+    //principal = OrganizationServicesHelper.manager.getPrincipal(replaceUser); //replace principal
+        
+    team.addPrincipal(role, principal);
+    //System.out.println("ext.generic.uril.WorkflowUtil.addPrincipalToRole: Replace = " + originalUser + " change to " + replaceUser);
+    //System.out.println("........." + principal.getName());
+    team = (Team) PersistenceHelper.manager.refresh(team);
+    team = (Team) PersistenceHelper.manager.save(team);
+    System.out.println("ext.generic.uril.WorkflowUtil.addPrincipalToRole: roleName = " + roleName + "-User=" + principal.getName());
+}
+
+
+```
+
+#### 1-3. 刪除 成員
+
+於單據中(路由/處理紀錄)角色內刪除成員
+下面的roleName指的是key
+
+```
+
+TeamUtil.removeUser(pbo, Arrays.asList(PROJECT_LEADER, L9_PM, SALES, PMP_ENGINEER));
+
+public static String removeUser(WTObject pbo, List<String> roleNameList) {
+	StringBuilder sb = new StringBuilder();
+	for(int i = 0; i<roleNameList.size(); i++){
+		sb.append(removeUser(pbo, roleNameList.get(i)));
+	}
+		
+	String msg = sb.toString();
+	sb.setLength(0);
+	return msg;
+}
+
+
+public static String removeUser(WTObject pbo, String roleName) {
+	String msg = "";
+	try {
+		Team team = ext.mitac.ecm.WorkflowUtil.getTeam(pbo);
+		Role role = _Role.toRole(roleName);
+		team = ext.mitac.ecm.WorkflowUtil.refreshTeam_FromDB(team);
+		Enumeration rolePrincipals = team.getPrincipalTarget(role);
+		boolean hasPrincipals = false;
+		while (rolePrincipals.hasMoreElements()) {
+			WTPrincipalReference prnplRef = (WTPrincipalReference) rolePrincipals.nextElement();
+			hasPrincipals = true;
+		}
+			
+		if (hasPrincipals) {
+			team.deleteRole(role);
+		}
+	} catch (Exception e) {
+		msg = "removeUser error roleName:"+roleName;
+		e.printStackTrace();
+	}
+
+	return msg;
+}
+
+```
+
+
 ### 2. 投票
 
 #### 2-1. 取得路由/處理紀錄內指定角色的成員
@@ -122,5 +213,7 @@ select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
 ```
 
 ### 3
+
+
 
 ### 4
