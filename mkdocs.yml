@@ -11,6 +11,7 @@ nav:
   - Windchill - Project: windchill_project.md
   - Windchill - Workfolw: windchill_workflow.md
   - Java - temp: java_temp.md
+  - Oracle - SQL: Oracle_SQL.md
 theme:
   features:
     - content.code.copy
