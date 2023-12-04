@@ -369,43 +369,9 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    2. 投票
-  </a>
-  
-    <nav class="md-nav" aria-label="2. 投票">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#2-1" class="md-nav__link">
-    2-1. 取得路由/處理紀錄內指定角色的成員
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-2" class="md-nav__link">
-    2-2. 取得路由/處理紀錄內指定角色實際簽核人員
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-3-sql" class="md-nav__link">
-    2-3. 查詢自動簽核的投票狀況 (SQL)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-4-sql" class="md-nav__link">
-    2-4. 修改簽核人員的註解 (SQL)
+  <a href="#1-4" class="md-nav__link">
+    1-4. 取得單據角色成員
   </a>
   
 </li>
@@ -541,43 +507,9 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    2. 投票
-  </a>
-  
-    <nav class="md-nav" aria-label="2. 投票">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#2-1" class="md-nav__link">
-    2-1. 取得路由/處理紀錄內指定角色的成員
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-2" class="md-nav__link">
-    2-2. 取得路由/處理紀錄內指定角色實際簽核人員
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-3-sql" class="md-nav__link">
-    2-3. 查詢自動簽核的投票狀況 (SQL)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-4-sql" class="md-nav__link">
-    2-4. 修改簽核人員的註解 (SQL)
+  <a href="#1-4" class="md-nav__link">
+    1-4. 取得單據角色成員
   </a>
   
 </li>
@@ -715,14 +647,51 @@ public static String removeUser(WTObject pbo, String roleName) {
 }
 
 </code></pre>
-<h3 id="2">2. 投票</h3>
-<h4 id="2-1">2-1. 取得路由/處理紀錄內指定角色的成員</h4>
-<p>getRolePrincipal(eco,"QE(PCBA) ENGINEER")
-QE(PCBA) ENGINEER為流程狀況中的名稱</p>
-<pre><code>public static ArrayList&lt;WTPrincipal&gt; getRolePrincipal(WTChangeOrder2 eco,String roleName) throws WTException {
-    ArrayList&lt;WTPrincipal&gt; list = new ArrayList&lt;WTPrincipal&gt;();
+<h4 id="1-4">1-4. 取得單據角色成員</h4>
+<pre><code>取得單據中的角色成員
+
+</code></pre>
+<p>public static List getParticipants(ObjectReference self, String rolename) {
+    List list = new ArrayList();
+    WTPrincipal wtprincipal = null;
+    try {
+        Role role = Role.toRole(rolename);
+        WfProcess pProcess = null;
+        Persistable persistable = self.getObject();
+        if (persistable instanceof WfActivity)
+            pProcess = ((WfActivity) persistable).getParentProcess();
+        else
+            pProcess = (WfProcess) persistable;
+        pProcess = (WfProcess) PersistenceHelper.manager.refresh(pProcess);</p>
+<pre><code>    TeamManaged object = (TeamManaged) pProcess;
+    Team team = TeamHelper.service.getTeam(object);
+
+    for (Enumeration enum1 = team.getPrincipalTarget(role); enum1.hasMoreElements();) {
+        wtprincipal = ((WTPrincipalReference) enum1.nextElement()).getPrincipal();
+        System.out.println("wtprincipal.getName() = " + wtprincipal.getName());
+        list.add(wtprincipal);
+    }
+
+} catch (WTException ex) {
+    ex.printStackTrace();
+}
+return list;
+</code></pre>
+<p>}</p>
+<pre><code>
+
+### 2. 投票
+
+#### 2-1. 取得路由/處理紀錄內指定角色的成員
+
+getRolePrincipal(eco,&quot;QE(PCBA) ENGINEER&quot;)
+QE(PCBA) ENGINEER為流程狀況中的名稱
+
+</code></pre>
+<p>public static ArrayList<WTPrincipal> getRolePrincipal(WTChangeOrder2 eco,String roleName) throws WTException {
+    ArrayList<WTPrincipal> list = new ArrayList<WTPrincipal>();
     wt.team.Team team = (wt.team.Team) eco.getTeamId().getObject();
-    Vector&lt;Role&gt; roles = team.getRoles();
+    Vector<Role> roles = team.getRoles();
     java.util.Enumeration principals;
     try {
       principals = team.getPrincipalTarget(wt.project.Role.toRole(roleName));
@@ -734,16 +703,19 @@ QE(PCBA) ENGINEER為流程狀況中的名稱</p>
       }
     } catch (WTInvalidParameterException | WTException e) {
       e.printStackTrace();
-    } // replace the role KEY appropriately
-
-    return list;
-}
+    } // replace the role KEY appropriately</p>
+<pre><code>return list;
 </code></pre>
-<h4 id="2-2">2-2. 取得路由/處理紀錄內指定角色實際簽核人員</h4>
-<p>getVotePerson(eco,"QE-MB")
-QE-MB為流程狀況中的角色</p>
-<pre><code>public static Set&lt;String&gt; getVotePerson(WTChangeOrder2 eco,String roleName) throws WTException {
-    Set&lt;String&gt; votors = new HashSet&lt;String&gt;();
+<p>}</p>
+<pre><code>
+#### 2-2. 取得路由/處理紀錄內指定角色實際簽核人員
+
+getVotePerson(eco,&quot;QE-MB&quot;)
+QE-MB為流程狀況中的角色
+
+</code></pre>
+<p>public static Set<String> getVotePerson(WTChangeOrder2 eco,String roleName) throws WTException {
+    Set<String> votors = new HashSet<String>();
     WTContainer wtContainer = eco.getContainer();
     QueryResult wfs = WfEngineHelper.service.getAssociatedProcesses(eco, null, WTContainerRef.newWTContainerRef(wtContainer));
         if (wfs.size() &gt; 0){
@@ -757,11 +729,11 @@ QE-MB為流程狀況中的角色</p>
                 if (wtprincipalreference != null) {
                     wtprincipal = (WTPrincipal) wtprincipalreference.getObject();
                 }
-                String displayRole = &quot;&quot;;
+                String displayRole = "";
                 if(wfvotingeventaudit.getRole()!=null){
                     displayRole = wfvotingeventaudit.getRole().getDisplay(Locale.ENGLISH);
                 }
-                System.out.println(&quot;displayRole:&quot; + displayRole);
+                System.out.println("displayRole:" + displayRole);
                 if(roleName.equalsIgnoreCase(displayRole)) {
                     votors.add(wtprincipal.getName());
                 }
@@ -769,11 +741,14 @@ QE-MB為流程狀況中的角色</p>
         }
     }
     return votors;
-}
+}</p>
+<pre><code>
+#### 2-3. 查詢自動簽核的投票狀況 (SQL)
+
+-- 查詢自動簽核的投票狀況
+
 </code></pre>
-<h4 id="2-3-sql">2-3. 查詢自動簽核的投票狀況 (SQL)</h4>
-<p>-- 查詢自動簽核的投票狀況</p>
-<pre><code>select Wv.*,sign.*
+<p>select Wv.<em>,sign.</em>
 from
   PLM_AUTO_SIGN sign,
   Wfprocess Wp,Wfassignedactivity Wfc,
@@ -782,24 +757,26 @@ from
   right join (Select Activitykey, Activityname, Ida3a6, Role, Eventlist, Usercomment,Ida2a2 As Wv_Ida2a2 ,Ida3b6  From Wfvotingeventaudit) Wv on Wv.Ida3b6 = Wi.Ida2a2
 where Wp.Ida2a2 = Wfc.Ida3parentprocessref and Waa.Ida3a4 = Wfc.Ida2a2
 and Wp.ida2a2 = replace(sign.WF_PROCESS_OID,'OR:wt.workflow.engine.WfProcess:','')
-and Wfc.Name = sign.WF_ACTIVITYNAME order by sign.trx_id desc;
+and Wfc.Name = sign.WF_ACTIVITYNAME order by sign.trx_id desc;</p>
+<pre><code>
+-- 查詢自動簽核的投票狀況 (以前稱作 auto by pass，但因為稽核問題，統一改成 by pass)
 </code></pre>
-<p>-- 查詢自動簽核的投票狀況 (以前稱作 auto by pass，但因為稽核問題，統一改成 by pass)</p>
-<pre><code>select ida2a2,Activitykey,Role,Eventlist,USERCOMMENT
+<p>select ida2a2,Activitykey,Role,Eventlist,USERCOMMENT
 from Wfvotingeventaudit
-where USERCOMMENT='by pass';
-</code></pre>
-<h4 id="2-4-sql">2-4. 修改簽核人員的註解 (SQL)</h4>
-<p>-- 修改簽核人員的註解</p>
-<pre><code>update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 = '8437249888' and USERCOMMENT='auto by pass';
-select * from Wfvotingeventaudit where ida2a2 = '8437249888';
+where USERCOMMENT='by pass';</p>
+<pre><code>
+#### 2-4. 修改簽核人員的註解 (SQL) 
 
-update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
+-- 修改簽核人員的註解
+
+</code></pre>
+<p>update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 = '8437249888' and USERCOMMENT='auto by pass';
+select * from Wfvotingeventaudit where ida2a2 = '8437249888';</p>
+<p>update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
   select ida2a2 from Wfvotingeventaudit where USERCOMMENT='auto by pass'
-);
-
-select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
-</code></pre>
+);</p>
+<p>select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
+```</p>
 <h3 id="3">3</h3>
 <h3 id="4">4</h3>
 
