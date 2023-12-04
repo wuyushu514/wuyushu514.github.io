@@ -90,6 +90,8 @@ public static String removeUser(WTObject pbo, String roleName) {
 		Enumeration rolePrincipals = team.getPrincipalTarget(role);
 		boolean hasPrincipals = false;
 		while (rolePrincipals.hasMoreElements()) {
+            //重啟單據時，系統會先將專案團隊人員ADD至單據中對應角色
+            //所以可能會比預期多一些人員
 			WTPrincipalReference prnplRef = (WTPrincipalReference) rolePrincipals.nextElement();
 			hasPrincipals = true;
 		}
@@ -249,8 +251,46 @@ update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
 select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
 ```
 
-### 3
 
+### 設定WF單據人員
 
+設定WF單據人員
+setRole(pbo, self, RoleEnum.SW, projectCode, RoleEnum.PMD_PL);
+RoleEnum key為 roleName, id 為 roleId
+
+```
+
+protected void setRole(WTObject pbo, Object self, RoleEnum role, String projectCode, RoleEnum defaultRole) {
+    try {
+        //清除單據中指定角色人員
+        TeamUtil.removeUser(pbo, Arrays.asList(role.getKey()));
+        List<String> ads = ProjectUtil.getTMSUserId(projectCode, role.getRoleId(), true);
+        for(String ad:ads) {
+            WorkflowUtil.addPrincipalToRole(self, role.getKey(), ad);
+        }
+        List<String> defaultAds = ProjectUtil.getTMSUserId(projectCode, defaultRole.getRoleId(), true);
+        setDefaultUserToRoles(self, Arrays.asList(role.getKey()), defaultAds);	
+    } catch (WTException e) {
+        e.printStackTrace();
+    }
+}
+
+protected void setDefaultUserToRoles(Object self, List<String> roleNames, List<String> defaultUsers) {
+    try {
+        for(String roleName:roleNames) {
+            List vc = WorkflowUtil.getParticipants((ObjectReference) self, roleName);
+            if(vc.isEmpty()) {
+                for(String defaultUser:defaultUsers) {
+                    //下面這行確定是單據的
+                    WorkflowUtil.addPrincipalToRole(self, roleName, defaultUser);
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+```
 
 ### 4
