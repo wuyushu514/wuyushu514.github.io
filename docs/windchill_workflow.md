@@ -108,6 +108,43 @@ public static String removeUser(WTObject pbo, String roleName) {
 ```
 
 
+#### 1-4. 取得單據角色成員
+
+```
+取得單據中的角色成員
+
+```
+public static List getParticipants(ObjectReference self, String rolename) {
+    List list = new ArrayList();
+    WTPrincipal wtprincipal = null;
+    try {
+        Role role = Role.toRole(rolename);
+        WfProcess pProcess = null;
+        Persistable persistable = self.getObject();
+        if (persistable instanceof WfActivity)
+            pProcess = ((WfActivity) persistable).getParentProcess();
+        else
+            pProcess = (WfProcess) persistable;
+        pProcess = (WfProcess) PersistenceHelper.manager.refresh(pProcess);
+
+        TeamManaged object = (TeamManaged) pProcess;
+        Team team = TeamHelper.service.getTeam(object);
+
+        for (Enumeration enum1 = team.getPrincipalTarget(role); enum1.hasMoreElements();) {
+            wtprincipal = ((WTPrincipalReference) enum1.nextElement()).getPrincipal();
+            System.out.println("wtprincipal.getName() = " + wtprincipal.getName());
+            list.add(wtprincipal);
+        }
+
+    } catch (WTException ex) {
+        ex.printStackTrace();
+    }
+    return list;
+}
+
+```
+
+
 ### 2. 投票
 
 #### 2-1. 取得路由/處理紀錄內指定角色的成員
