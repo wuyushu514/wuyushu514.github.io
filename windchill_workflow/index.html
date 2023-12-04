@@ -382,13 +382,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    3
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#4" class="md-nav__link">
     4
   </a>
@@ -520,13 +513,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    3
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#4" class="md-nav__link">
     4
   </a>
@@ -631,6 +617,8 @@ public static String removeUser(WTObject pbo, String roleName) {
         Enumeration rolePrincipals = team.getPrincipalTarget(role);
         boolean hasPrincipals = false;
         while (rolePrincipals.hasMoreElements()) {
+            //重啟單據時，系統會先將專案團隊人員ADD至單據中對應角色
+            //所以可能會比預期多一些人員
             WTPrincipalReference prnplRef = (WTPrincipalReference) rolePrincipals.nextElement();
             hasPrincipals = true;
         }
@@ -775,9 +763,46 @@ select * from Wfvotingeventaudit where ida2a2 = '8437249888';</p>
 <p>update Wfvotingeventaudit set USERCOMMENT='by pass' where ida2a2 in (
   select ida2a2 from Wfvotingeventaudit where USERCOMMENT='auto by pass'
 );</p>
-<p>select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';
-```</p>
-<h3 id="3">3</h3>
+<p>select ida2a2 from Wfvotingeventaudit where USERCOMMENT='by pass';</p>
+<pre><code>
+
+### 設定WF單據人員
+
+設定WF單據人員
+setRole(pbo, self, RoleEnum.SW, projectCode, RoleEnum.PMD_PL);
+RoleEnum key為 roleName, id 為 roleId
+
+</code></pre>
+<p>protected void setRole(WTObject pbo, Object self, RoleEnum role, String projectCode, RoleEnum defaultRole) {
+    try {
+        //清除單據中指定角色人員
+        TeamUtil.removeUser(pbo, Arrays.asList(role.getKey()));
+        List<String> ads = ProjectUtil.getTMSUserId(projectCode, role.getRoleId(), true);
+        for(String ad:ads) {
+            WorkflowUtil.addPrincipalToRole(self, role.getKey(), ad);
+        }
+        List<String> defaultAds = ProjectUtil.getTMSUserId(projectCode, defaultRole.getRoleId(), true);
+        setDefaultUserToRoles(self, Arrays.asList(role.getKey()), defaultAds);<br />
+    } catch (WTException e) {
+        e.printStackTrace();
+    }
+}</p>
+<p>protected void setDefaultUserToRoles(Object self, List<String> roleNames, List<String> defaultUsers) {
+    try {
+        for(String roleName:roleNames) {
+            List vc = WorkflowUtil.getParticipants((ObjectReference) self, roleName);
+            if(vc.isEmpty()) {
+                for(String defaultUser:defaultUsers) {
+                    //下面這行確定是單據的
+                    WorkflowUtil.addPrincipalToRole(self, roleName, defaultUser);
+                }
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}</p>
+<p>```</p>
 <h3 id="4">4</h3>
 
 
