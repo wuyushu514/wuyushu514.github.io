@@ -40,4 +40,10 @@ GROUP BY loc.ASSEMBLY_ITEM_NUMBER,
   loc.QUANTITY
 ```
 
+#### UPDATE FROM
 
+參考下面link, 此外效率上第二種比第一種好
+
+```
+link :https://blog.csdn.net/wzy0623/article/details/53927128
+```
