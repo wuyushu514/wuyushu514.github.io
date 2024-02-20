@@ -405,6 +405,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#viewtable" class="md-nav__link">
+    查找有哪些view使用到某table
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -484,6 +491,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#viewtable" class="md-nav__link">
+    查找有哪些view使用到某table
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -545,6 +559,11 @@ GROUP BY loc.ASSEMBLY_ITEM_NUMBER,
 <h4 id="update-from">UPDATE FROM</h4>
 <p>參考下面link, 此外效率上第二種比第一種好</p>
 <pre><code>link :https://blog.csdn.net/wzy0623/article/details/53927128
+</code></pre>
+<h4 id="viewtable">查找有哪些view使用到某table</h4>
+<pre><code>SELECT distinct OWNER, NAME, REFERENCED_NAME FROM all_dependencies 
+start with referenced_name = UPPER('table_name')
+connect by nocycle prior UPPER(NAME) = UPPER(referenced_name)
 </code></pre>
 
 
