@@ -47,3 +47,13 @@ GROUP BY loc.ASSEMBLY_ITEM_NUMBER,
 ```
 link :https://blog.csdn.net/wzy0623/article/details/53927128
 ```
+
+
+
+#### 查找有哪些view使用到某table
+
+```
+SELECT distinct OWNER, NAME, REFERENCED_NAME FROM all_dependencies 
+start with referenced_name = UPPER('table_name')
+connect by nocycle prior UPPER(NAME) = UPPER(referenced_name)
+```
